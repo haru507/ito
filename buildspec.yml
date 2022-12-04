@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+      golang: 1.14
+    commands:
+      - sed -i 's/REACT_APP_ENV=.*/REACT_APP_ENV=production/g' ./frontend/ito/.env
+      - n 14.17.5
+      - npm --prefix ./frontend/ito install
+      - goenv install -l
+      - goenv install 1.18.3
+      - goenv global 1.18.3
+      - GOARCH="amd64" GOCACHE="/root/.cache/go-build" GOENV="/root/.config/go/env" GOHOSTARCH="amd64" GOHOSTOS="linux" GOMODCACHE="/root/go/pkg/mod" GOOS="linux" 
+  build:
+    on-failure: ABORT
+    commands:
+      - npm --prefix ./frontend/ito run build
+      - cd ./backend_go && go build -o main main.go
+artifacts:
+  type: zip
+  files:
+    - "**/*"
+  discard-paths: no

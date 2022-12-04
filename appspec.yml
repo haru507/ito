@@ -1,0 +1,20 @@
+version: 0.0
+os: linux
+files:
+  - source: ./
+    destination: /var/www/job_ito
+  - source: infra/nginx/nginx.conf
+    destination: /etc/nginx
+  - source: infra/nginx/etc/systemd/system/job-ito.service
+    destination: /etc/systemd/system/
+file_exists_behavior: OVERWRITE
+permissions:
+  - object: /var/www/
+    owner: nginx
+    group: nginx
+hooks:
+  BeforeInstall:
+    - location: infra/scripts/stop-service.sh
+  AfterInstall:
+    - location: infra/scripts/start-service.sh
+      timeout: 180

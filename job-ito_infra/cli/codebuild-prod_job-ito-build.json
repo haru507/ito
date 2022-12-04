@@ -1,0 +1,20 @@
+{
+  "name": "prod_job-ito-build",
+  "source": {
+    "type": "CODECOMMIT",
+    "location": "https://git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/job-ito"
+  },
+  "artifacts": {
+    "type": "NO_ARTIFACTS"
+  },
+  "cache": {
+    "type": "NO_CACHE"
+  },
+  "environment": {
+    "type": "LINUX_CONTAINER",
+    "image": "aws/codebuild/amazonlinux2-x86_64-standard:3.0",
+    "computeType": "BUILD_GENERAL1_SMALL",
+    "imagePullCredentialsType": "CODEBUILD"
+  },
+  "serviceRole": "arn:aws:iam::850987806830:role/CodeBuildServiceRole"
+}

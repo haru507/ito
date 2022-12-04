@@ -1,0 +1,52 @@
+version: "3.8"
+services:
+  backend:
+    build: ./infra/php
+    container_name: backend
+    volumes:
+      - ./backend:/var/www/html
+    working_dir: /var/www/html
+
+  backend_nginx:
+    container_name: backend_nginx
+    image: nginx:1.20-alpine
+    ports:
+      - 8080:80
+    volumes:
+      - ./backend:/var/www/html
+      - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    working_dir: /work
+
+  go_job:
+      build: ./infra/golang
+      container_name: go_job
+      environment:
+        TZ: "Asia/Tokyo"
+        LANG: "ja_JP.utf8"
+        LC_ALL: "ja_JP.utf8"
+        PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/go/bin:/usr/lib/golang/bin
+        GOPATH: /root/go
+      ports:
+        - "6785:6785"
+      restart: unless-stopped
+      tty: true
+      volumes:
+        - ./backend_go/:/root/go/src
+      working_dir: /root/go/src
+
+  database_mysql:
+    build: ./infra/mysql 
+    container_name: database_mysql 
+    volumes:
+      - db-store:/var/lib/mysql
+
+  frontend:
+    build: ./infra/node
+    volumes:
+      - ./frontend:/usr/src/app
+    ports:
+      - "3332:3332"
+    tty: true
+
+volumes:
+  db-store:

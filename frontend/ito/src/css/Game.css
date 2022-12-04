@@ -1,0 +1,18 @@
+.number-card-area{
+  width:100%;
+  margin: 30px 20px;
+}
+
+.number-card{
+  padding: 10px;
+  border: 1px dashed #333333;
+  border-radius: 5px;
+  width: 100px;
+  height: 120px;
+  margin: 30px 5px;
+  float: left;
+}
+
+.contents{
+  clear: both;
+}

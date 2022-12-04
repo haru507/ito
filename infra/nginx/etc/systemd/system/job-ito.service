@@ -1,0 +1,12 @@
+[Unit]
+Description = job-ito
+
+[Service]
+User = root
+Type = simple
+ExecStart = /var/www/job_ito/backend_go/main
+WorkingDirectory = /var/www/job_ito/backend_go
+Restart = always
+
+[Install]
+WantedBy = multi-user.target

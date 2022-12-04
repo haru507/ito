@@ -1,0 +1,35 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+      php: 7.4
+    commands:
+      - n 16
+      - npm --prefix ./layout/var/www/bspapp_appserver install
+      - aws s3 cp s3://prod-bsp-deploy/prod-bsp-appserver-infra/prod-bsp-appserver-infra.zip ./
+      - aws s3 cp s3://prod-bsp-deploy/prod-bsp-appserver-env/.env ./layout/var/www/bspapp_appserver/
+      - unzip -n prod-bsp-appserver-infra.zip
+      - chmod -R 644 layout/etc
+      - rm -Rf /root/.phpenv/shims/php
+      - yum -y remove php-*
+      - PYTHON=python2 amazon-linux-extras disable php7.4
+      - PYTHON=python2 amazon-linux-extras enable php8.0
+      - PYTHON=python2 amazon-linux-extras install php8.0 -y
+      - yum install yum-utils php-xml php-sodium -y
+      - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+      - php composer-setup.php --version=2.3.7
+      - php -r "unlink('composer-setup.php');"
+    finally:
+      - rm -f ./prod-bsp-appserver_infra.zip
+  build:
+    on-failure: ABORT
+    commands:
+      - php composer.phar install --working-dir=./layout/var/www/bspapp_appserver
+      - npm --prefix ./layout/var/www/bspapp_appserver run production
+artifacts:
+  type: zip
+  files:
+    - "**/*"
+  discard-paths: no

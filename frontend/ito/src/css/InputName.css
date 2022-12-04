@@ -1,0 +1,77 @@
+.username-wrap{
+  position: relative;
+  width: 500px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.username-label{
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  font-size: 16px;
+  color: #a0a0a0;
+  transition: all 0.25s ease;
+}
+
+.username-textbox{
+  position: relative;
+  display: block;
+  width: 500px;
+  margin-top: 50px;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #a0a0a0;
+  outline: none;
+}
+
+.display-rule{
+  border: solid;
+  width: 60%;
+  margin: auto;
+  height: 250px;
+  overflow:auto;
+}
+
+.whatIsIto{
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 30px;
+  text-align: left;
+}
+
+.howToPlay{
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 50px;
+  text-align: left;
+}
+
+.howToPlay-detail{
+  margin-left:10px;
+}
+.title{
+  font-weight: bold;
+  margin-left: 10px;
+  color: rgb(15, 39, 85);
+}
+.detail{
+  width: 100%;
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-bottom: 25px;
+}
+
+.rule{
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 50px;
+  text-align: left;
+}
+.rule-detail{
+  margin-left: 10px;
+  text-align: left;
+  line-height: 35px;
+}
