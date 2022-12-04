@@ -1,12 +1,5 @@
 version: "3.8"
 services:
-  backend:
-    build: ./infra/php
-    container_name: backend
-    volumes:
-      - ./backend:/var/www/html
-    working_dir: /var/www/html
-
   backend_nginx:
     container_name: backend_nginx
     image: nginx:1.20-alpine
@@ -34,12 +27,6 @@ services:
         - ./backend_go/:/root/go/src
       working_dir: /root/go/src
 
-  database_mysql:
-    build: ./infra/mysql 
-    container_name: database_mysql 
-    volumes:
-      - db-store:/var/lib/mysql
-
   frontend:
     build: ./infra/node
     volumes:
@@ -47,6 +34,3 @@ services:
     ports:
       - "3332:3332"
     tty: true
-
-volumes:
-  db-store:
